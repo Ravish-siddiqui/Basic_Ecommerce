@@ -1,5 +1,66 @@
-<footer class="bg-primary pt-3">
-    <div class="container d-flex justify-content-center align-items-center text-light fw-lighter">
-        <p>&copy; E-Commerce 2024</p>
+<footer class="py-4 mt-5 shadow-lg" style="background-color: #c39c63 !important; color: white;">
+    <div class="container text-center">
+        <div class="row">
+            <!-- Brand & Description -->
+            <div class="col-md-4 mb-3">
+                <h5 class="fw-bold text-light">
+                    <i class="fas fa-store"></i> Shopping Cart
+                </h5>
+                <p class="small" style="color: white;">Your one-stop shop for the best products at unbeatable prices.</p>
+            </div>
+
+            <!-- Quick Links -->
+            <div class="col-md-4 mb-3">
+                <h5 class="fw-bold text-light">Quick Links</h5>
+                <ul class="list-unstyled">
+                    <li><a href="/" class="footer-link">Home</a></li>
+                    <li><a href="/products" class="footer-link">Shop</a></li>
+                    <li><a href="/cartItems" class="footer-link">Cart</a></li>
+                    <li><a href="/account" class="footer-link">Account</a></li>
+                </ul>
+            </div>
+
+            <!-- Social Media -->
+            <div class="col-md-4 mb-3">
+                <h5 class="fw-bold text-light">Follow Us</h5>
+                <div class="d-flex justify-content-center gap-3">
+                    <a href="#" class="footer-social"><i class="fab fa-facebook"></i></a>
+                    <a href="#" class="footer-social"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="footer-social"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="footer-social"><i class="fab fa-linkedin"></i></a>
+                </div>
+            </div>
+        </div>
+
+        <hr class="border-light my-3">
+
+        <!-- Copyright -->
+        <p class="mb-0 small text-light">&copy; <%= new Date().getFullYear() %> Shopping Cart. All Rights Reserved.</p>
     </div>
 </footer>
+
+<style>
+    /* Footer link hover effect */
+    .footer-link {
+        color: white;
+        text-decoration: none;
+        transition: color 0.3s ease-in-out, transform 0.2s;
+    }
+
+    .footer-link:hover {
+        color: #d14630; /* Yellow hover effect */
+        transform: translateX(5px); /* Slight movement */
+    }
+
+    /* Social media icon hover effect */
+    .footer-social {
+        color: white;
+        font-size: 1.5rem;
+        transition: color 0.3s ease-in-out, transform 0.2s;
+    }
+
+    .footer-social:hover {
+        color: #d14630; /* Yellow hover effect */
+        transform: scale(1.2); /* Slight zoom effect */
+    }
+</style>

@@ -1,43 +1,124 @@
-<nav class="navbar navbar-expand-lg bg-primary navbar-dark text-white fixed-top">
-    <div class="container">
-      <a class="navbar-brand" href="#">E-Commerce</a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+<head>
+  <!-- Google Font - Poppins -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+  <style>
+      /* Navbar Custom Styles */
+      .navbar {
+          background-color: #d14630 !important; /* Updated color */
+          font-family: 'Poppins', sans-serif;
+          position: fixed;
+          top: 0;
+          width: 100%;
+          z-index: 1000;
+          box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+          padding: 10px 0;
+      }
+
+      /* Prevent content from going under the navbar */
+      body {
+          padding-top: 70px;
+      }
+
+      .navbar-brand {
+          font-weight: 700;
+          font-size: 1.8rem;
+          letter-spacing: 1px;
+          text-transform: uppercase;
+          color: #fff;
+          transition: 0.3s ease-in-out;
+          text-shadow: 0 0 10px rgba(255, 255, 255, 0.7);
+      }
+
+      .navbar-brand:hover {
+          color: #ffeb3b;
+          text-shadow: 0 0 15px rgba(255, 235, 59, 1);
+      }
+
+      .nav-link {
+          color: #fff !important;
+          font-weight: 500;
+          transition: 0.3s ease;
+      }
+
+      .nav-link:hover {
+          color: #ffeb3b !important;
+          transform: scale(1.1);
+      }
+
+      .navbar-toggler {
+          border: none;
+      }
+
+      .badge {
+          font-size: 0.8rem;
+          font-weight: bold;
+      }
+
+      .nav-icons {
+          font-size: 1.2rem;
+      }
+  </style>
+</head>
+
+<nav class="navbar navbar-expand-lg shadow-lg py-3">
+<div class="container">
+    <!-- Brand Name with Glow Effect -->
+    <a class="navbar-brand" href="/">
+        <i class="fas fa-store"></i> <span style="color:#ffeb3b;">Shopping </span>Cart
+    </a>
+
+    <!-- Mobile Toggle Button -->
+    <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent">
         <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-          <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="/">Home</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/products">Products</a>
-          </li>
-          <% if (user && user.role === 'seller') { %>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <!-- Left Links -->
+        <ul class="navbar-nav me-auto">
             <li class="nav-item">
-              <a class="nav-link" href="/products/new">Add Product</a>
+                <a class="nav-link px-3" href="/">Home</a>
             </li>
-          <% } %>
+            <li class="nav-item">
+                <a class="nav-link px-3" href="/products">Shop</a>
+            </li>
+            <% if (user && user.role === 'seller') { %>
+                <li class="nav-item">
+                    <a class="nav-link px-3" href="/products/new">
+                        <i class="fas fa-plus-circle nav-icons"></i> Add Product
+                    </a>
+                </li>
+            <% } %>
         </ul>
 
-        <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-          <% if (!user) { %>
-            <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="/login">Login</a>
-            </li>
-          <% } else{ %>
-            <li class="nav-item">
-              <a class="nav-link active pb-0">Hello <%= user.username %></a>
-            </li>
-            <li class="nav-item">
-              <a href="/cartItems" class="nav-link"><i class="fas fa-shopping-cart"></i>
-                <sup><span class="badge bg-danger"><%= productQuantity %></span></sup>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link active" href="/logout">Logout</a>
-            </li>
-          <% } %>
+        <!-- Right Links (User Authentication & Cart) -->
+        <ul class="navbar-nav ms-auto align-items-center">
+            <% if (!user) { %>
+                <li class="nav-item">
+                    <a class="nav-link px-3" href="/login">
+                        <i class="fas fa-sign-in-alt nav-icons"></i> Login
+                    </a>
+                </li>
+            <% } else { %>
+                <li class="nav-item">
+                    <span class="nav-link px-3">
+                        <i class="fas fa-user-circle nav-icons"></i> Hello, <%= user.username %>
+                    </span>
+                </li>
+                <li class="nav-item position-relative">
+                    <a href="/cartItems" class="nav-link px-3">
+                        <i class="fas fa-shopping-cart fa-lg"></i>
+                        <sup class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                            <%= productQuantity %>
+                        </sup>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link px-3" href="/logout">
+                        <i class="fas fa-sign-out-alt nav-icons"></i> Logout
+                    </a>
+                </li>
+            <% } %>
         </ul>
-      </div>
     </div>
-  </nav>
+</div>
+</nav>

@@ -1,34 +1,79 @@
 <% layout('layouts/boilerplate') -%>
 
-<div class="row">
-    <div class="col col-6 mx-auto">
-        <form method="post" action="/signup">
-            <div class="mb-3">
-                <label for="username-inp" class="form-label">Username</label>
-                <input name="username" type="text" class="form-control" id="username-inp" aria-describedby="emailHelp">
-              </div>
-            <div class="mb-3">
-              <label for="exampleInputEmail1" class="form-label">Email address</label>
-              <input name="email" type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-            </div>
-            <div class="mb-3">
-                <label for="role-inp" class="form-label">Role</label>
-                <select name="role" id="role-inp" class="form-select form-select-sm" aria-label="Small select example">
-                    <option selected value="buyer">Buyer</option>
-                    <option value="seller">Seler</option>
-                </select>
-            </div>
-            <div class="mb-3">
-              <label for="exampleInputPassword1" class="form-label">Password</label>
-              <input name="password" type="password" class="form-control" id="exampleInputPassword1">
-            </div>
-            <button type="submit" class="btn btn-primary">Submit</button>
-          </form>
+<div class="d-flex justify-content-center align-items-center min-vh-100">
+  <div class="card p-4 shadow-sm border-0" style="width: 100%; max-width: 400px; border-radius: 10px;">
+    
+    <h2 class="text-center fw-bold mb-3 text-dark">Create an Account</h2>
 
-          <br>
-          <p>
-            Already have an account?
-            <a href="/login">Login</a>
-          </p>
-    </div>
+    <%- include('../partials/flash') %>
+
+    <form method="post" action="/signup">
+      <!-- Username -->
+      <div class="mb-3">
+        <label for="username-inp" class="form-label fw-semibold">Username</label>
+        <input name="username" type="text" class="form-control" id="username-inp" required>
+      </div>
+
+      <!-- Email -->
+      <div class="mb-3">
+        <label for="email-inp" class="form-label fw-semibold">Email Address</label>
+        <input name="email" type="email" class="form-control" id="email-inp" required>
+      </div>
+
+      <!-- Role Selection -->
+      <div class="mb-3">
+        <label for="role-inp" class="form-label fw-semibold">Role</label>
+        <select name="role" id="role-inp" class="form-select" required>
+          <option value="buyer" selected>Buyer</option>
+          <option value="seller">Seller</option>
+        </select>
+      </div>
+
+      <!-- Password -->
+      <div class="mb-3">
+        <label for="password-inp" class="form-label fw-semibold">Password</label>
+        <input name="password" type="password" class="form-control" id="password-inp" required>
+      </div>
+
+      <!-- Signup Button -->
+      <button type="submit" class="btn btn-dark w-100 fw-semibold">Sign Up</button>
+    </form>
+
+    <!-- Login Link -->
+    <p class="text-center mt-3 text-secondary">
+      Already have an account? <a href="/login" class="fw-semibold text-dark">Login</a>
+    </p>
+
+  </div>
 </div>
+
+<style>
+  body {
+    background: #f8f9fa; /* Light Grey Background */
+  }
+
+  .card {
+    background: white;
+    padding: 20px;
+  }
+
+  .form-control, .form-select {
+    border: 1px solid #ced4da;
+    border-radius: 5px;
+  }
+
+  .form-control:focus, .form-select:focus {
+    border-color: #212529;
+    box-shadow: none;
+  }
+
+  .btn-dark {
+    background-color: #212529;
+    border-radius: 5px;
+    transition: all 0.2s ease-in-out;
+  }
+
+  .btn-dark:hover {
+    background-color: #000;
+  }
+</style>

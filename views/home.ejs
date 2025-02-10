@@ -1,54 +1,123 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Shopping Cart</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css"
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css" 
         integrity="sha384-r4NyP46KrjDleawBgD5tp8Y7UzmLA05oM1iAEQ17CSuDqnUK2+k9luXQOfXJCJ4I" crossorigin="anonymous">
-    <link rel="stylesheet" href="/css/home.css">
+    
+    <style>
+        /* General Styles */
+        body {
+            height: 100vh;
+            background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+                url("./../20250210_142422_0000.png");
+            background-size: cover;
+            background-position: center;
+            text-shadow: 0 0.05rem 0.1rem rgba(0, 0, 0, 0.5);
+            box-shadow: inset 0 0 5rem rgba(0, 0, 0, 0.5);
+            background-color: #f8f9fa;
+            color: white; /* Make all text white */
+            font-family: 'Helvetica Neue', sans-serif;
+            overflow: hidden;
+        }
+
+        /* Container */
+        .container {
+            max-width: 1200px;
+            margin: auto;
+            padding: 40px 20px;
+            text-align: center;
+        }
+
+        /* Hero Section */
+        .hero {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 80vh;
+            background: url('/views/20250210_142422_0000') no-repeat center center/cover;
+            color: white;
+        }
+
+        .hero h1, .hero p {
+            color: white;
+        }
+
+        .hero h1:hover, .hero p:hover {
+            color: #c39c63; /* Bag color */
+        }
+
+        /* Navbar */
+        .navbar h3, .nav-link {
+            color: white !important;
+            font-size: 1rem;
+            font-weight: 600;
+            margin: 0 15px;
+            transition: color 0.3s;
+        }
+
+        .nav-link:hover {
+            color: #c39c63 !important; /* Change hover color to bag color */
+        }
+
+        /* Buttons */
+        .btn-primary {
+            background: white;
+            border: none;
+            padding: 12px 30px;
+            font-size: 1rem;
+            color: black;
+            transition: all 0.3s;
+        }
+
+        .btn-primary:hover {
+            background: #c39c63;
+            color: white;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 20px;
+            font-size: 0.9rem;
+            color: white;
+        }
+
+        footer p:hover {
+            color: #c39c63;
+        }
+    </style>
 </head>
-
-<body class="d-flex text-center text-white bg-dark">
-    <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
-        <header class="mb-auto">
+<body>
+    <nav class="navbar navbar-light bg-transparent py-3">
+        <div class="container d-flex justify-content-between">
+            <h3 class="mb-0">Shopping Cart</h3>
             <div>
-                <h3 class="float-md-left mb-0">Shopping Cart</h3>
-                <nav class="nav nav-masthead justify-content-center float-md-right">
-                    <a class="nav-link active" aria-current="page" href="#">Home</a>
-                    <a class="nav-link" href="/products">Products</a>
-                    <% if(!user) { %>
-                    <a class="nav-link" href="/login">Login</a>
-                    <a class="nav-link" href="/register">Register</a>
-                    <% } else { %>
-                    <a class="nav-link" href="/logout">Logout</a>
-                    <% } %>
-                </nav>
+                <a class="nav-link d-inline" href="#">Home</a>
+                <a class="nav-link d-inline" href="/products">Shop</a>
+                <% if(!user) { %>
+                <a class="nav-link d-inline" href="/login">Login</a>
+                <a class="nav-link d-inline" href="/signup">Register</a>
+                <% } else { %>
+                <a class="nav-link d-inline" href="/logout">Logout</a>
+                <% } %>
             </div>
-        </header>
-        <main class="px-3">
+        </div>
+    </nav>
+    
+    <div class="container">
+        <div class="hero">
             <h1>Shopping Cart</h1>
-            <p class="lead"> Welcome to Shopping Cart! <br> Jump right in and explore our many products. <br>
-                Feel free to add some of your own and comment on others!</p>
-            <a href="/products" class="btn btn-sm btn-secondary font-weight-bold border-white bg-white ">View
-                Products</a>
-        </main>
-
-        <footer class="mt-auto text-white-50">
-            <p>All Right Reserved &copy; 2024 </p>
-        </footer>
-
-
+            <p>Explore our collection and find something amazing today.</p>
+            <a href="/products" class="btn btn-primary">View Products</a>
+        </div>
     </div>
-
-
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
-        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
-        crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/js/bootstrap.min.js"
-        integrity="sha384-oesi62hOLfzrys4LxRF63OJCXdXDipiYWBnvTl9Y9/TRlw5xlKIEHpNyvvDShgf/"
-        crossorigin="anonymous"></script>
+    
+    <footer>
+        <p>All Rights Reserved &copy; 2024</p>
+    </footer>
 </body>
-
 </html>

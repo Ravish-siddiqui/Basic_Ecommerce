@@ -1,25 +1,64 @@
 <% layout('layouts/boilerplate') -%>
 
-<div class="row">
-  <div class="col col-6 mx-auto">
-      <%- include('../partials/flash') %>
-        <form method="post" action="/login">
-            <div class="mb-3">
-                <label for="username-inp" class="form-label">Username</label>
-                <input name="username" type="text" class="form-control" id="username-inp" aria-describedby="emailHelp">
-              </div>
+<div class="d-flex justify-content-center align-items-center min-vh-100">
+  <div class="card p-4 shadow-sm border-0" style="width: 100%; max-width: 400px; border-radius: 10px;">
+    
+    <h2 class="text-center fw-bold mb-3 text-dark">Welcome Back</h2>
 
-            <div class="mb-3">
-              <label for="exampleInputPassword1" class="form-label">Password</label>
-              <input name="password" type="password" class="form-control" id="exampleInputPassword1">
-            </div>
-            <button type="submit" class="btn btn-primary">Login</button>
-          </form>
+    <%- include('../partials/flash') %>
 
-          <br>
-          <p>
-            Haven't signed up?
-            <a href="/signup">Signup</a>
-          </p>
-    </div>
+    <form method="post" action="/login">
+      <!-- Username Field -->
+      <div class="mb-3">
+        <label for="username-inp" class="form-label fw-semibold">Username</label>
+        <input name="username" type="text" class="form-control" id="username-inp" required>
+      </div>
+
+      <!-- Password Field -->
+      <div class="mb-3">
+        <label for="password-inp" class="form-label fw-semibold">Password</label>
+        <input name="password" type="password" class="form-control" id="password-inp" required>
+      </div>
+
+      <!-- Login Button -->
+      <button type="submit" class="btn btn-dark w-100 fw-semibold">Login</button>
+    </form>
+
+    <!-- Signup Link -->
+    <p class="text-center mt-3 text-secondary">
+      New here? <a href="/signup" class="fw-semibold text-dark">Create an account</a>
+    </p>
+
+  </div>
 </div>
+
+<style>
+  body {
+    background: #f8f9fa; /* Light Grey Background */
+  }
+
+  .card {
+    background: white;
+    padding: 20px;
+  }
+
+  .form-control {
+    border: 1px solid #ced4da;
+    border-radius: 5px;
+  }
+
+  .form-control:focus {
+    border-color: #212529;
+    box-shadow: none;
+  }
+
+  .btn-dark {
+    background-color: #212529;
+    border-radius: 5px;
+    transition: all 0.2s ease-in-out;
+  }
+
+  .btn-dark:hover {
+    background-color: #000;
+  }
+</style>

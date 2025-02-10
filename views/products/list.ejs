@@ -1,28 +1,72 @@
 <% layout('layouts/boilerplate') -%>
 
-    <!-- products -->
+<%- include('../partials/flash') %>
 
-   <%- include('../partials/flash') %>
-    
-    <div class="d-flex flex-wrap gap-3 justify-content-center">
-      <% for( let product of products ) { %>
-        <div class="card" style="width: 18rem;">
-          <img src="<%= product.image %>" height="210px" class="card-img-top" alt="...">
-          <div class="card-body">
-            <h5 class="card-title d-flex justify-content-between">
-              <span><%= product.title %></span>
-              <% if (user && user.wishList.includes(product._id)) { %>
-                <i productId="<%= product._id %>" class="text-danger fa-heart fa-solid btn btn like-btn"></i>
-              <% } else { %>
-                  <i productId="<%= product._id %>" class="text-danger fa-heart fa-regular btn btn like-btn"></i>
-              <% } %>
-            </h5>
-            <h6>$ <%= product.price %></h6>
-            <p class="card-text"><%= product.description %></p>
-            <a href="/products/<%= product._id %>" class="btn btn-sm btn-primary">Show</a>
+<div id="productCarousel" class="carousel slide mb-4" data-bs-ride="carousel">
+  <div class="carousel-inner">
+      <% for(let i = 0; i < Math.min(products.length, 3); i++) { %>
+          <div class="carousel-item <%= i === 0 ? 'active' : '' %> position-relative">
+              <img src="<%= products[i].image %>" class="d-block w-100 rounded" alt="Featured Product" 
+                   style="height: 500px; object-fit: cover;">
+              
+              <!-- Animated Product Name (Moved Up & Smooth Fade-in) -->
+              <div class="position-absolute start-0 text-white fw-bold px-4 py-2 rounded animate-text" 
+                   style="top: 20%; background: rgba(0, 0, 0, 0.4); backdrop-filter: blur(3px); font-size: 1.8rem;">
+                  <%= products[i].title %>
+              </div>
           </div>
-        </div>
       <% } %>
-    </div>
+  </div>
+  
+  <!-- Carousel Controls -->
+  <button class="carousel-control-prev" type="button" data-bs-target="#productCarousel" data-bs-slide="prev">
+      <span class="carousel-control-prev-icon bg-dark rounded-circle" aria-hidden="true"></span>
+      <span class="visually-hidden">Previous</span>
+  </button>
+  <button class="carousel-control-next" type="button" data-bs-target="#productCarousel" data-bs-slide="next">
+      <span class="carousel-control-next-icon bg-dark rounded-circle" aria-hidden="true"></span>
+      <span class="visually-hidden">Next</span>
+  </button>
+</div>
 
-  <script src="/js/wishList.js"></script>
+<!-- Custom Animation -->
+<style>
+  .animate-text {
+      opacity: 0;
+      transform: translateY(-20px);
+      animation: fadeInUp 0.8s ease-in-out forwards;
+  }
+
+  @keyframes fadeInUp {
+      0% { opacity: 0; transform: translateY(-20px); }
+      100% { opacity: 1; transform: translateY(0); }
+  }
+</style>
+
+
+<div class="container">
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+        <% for( let product of products ) { %>
+            <div class="col">
+                <div class="card shadow-lg border-0 rounded-4 overflow-hidden bg-light">
+                    <img src="<%= product.image %>" class="card-img-top img-fluid" alt="Product Image" style="height: 250px; object-fit: cover;">
+                    <div class="card-body">
+                        <h5 class="card-title d-flex justify-content-between align-items-center">
+                            <span class="fw-bold text-dark"><%= product.title %></span>
+                            <% if (user && user.wishList.includes(product._id)) { %>
+                                <i productId="<%= product._id %>" class="text-danger fa-heart fa-solid btn btn like-btn"></i>
+                            <% } else { %>
+                                <i productId="<%= product._id %>" class="text-danger fa-heart fa-regular btn btn like-btn"></i>
+                            <% } %>
+                        </h5>
+                        <h6 class="text-success fw-bold">$ <%= product.price %></h6>
+                        <p class="card-text text-muted small"><%= product.description %></p>
+                        <a href="/products/<%= product._id %>" class="btn btn-primary w-100 rounded-pill">View Details</a>
+                    </div>
+                </div>
+            </div>
+        <% } %>
+    </div>
+</div>
+
+<script src="/js/wishList.js"></script>

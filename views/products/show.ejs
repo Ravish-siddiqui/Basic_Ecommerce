@@ -2,42 +2,38 @@
 
 <%- include('../partials/flash') %>
 
-    <div class="row mt-4">
-        <div class="col- col-lg-6">
-            <div class="card mx-auto" style="width: 20rem;">
-                <img src="<%= product.image %>" height="210px" class="card-img-top" alt="...">
-                <div class="card-body">
-                  <h5 class="card-title"><%= product.title %></h5>
-                  <h5 class="card-title">$ <%= product.price %></h5>
-                  <p class="card-text"><%= product.description %></p>
-                  <a id="buy-now-btn" productId="<%= product._id %>" class="btn btn-sm btn-primary">Buy Now</a>
-                  <form class="d-inline" action="/cartItems/<%= product._id %>/add" method="post">
-                    <button class="btn btn-sm btn-success">Add to Cart</button>
-                  </form>
-
-                  <% if (user && user.role == 'buyer') { %>
-                    <!-- <form class="d-inline" method="post" action="/cartItems">
-                        <input class="d-none" type="text" name="productId" value="<%= product._id %>">
-                        <button class="btn btn-sm btn-success">Add to Cart</button>
-                      </form> -->
-                    
-                    <% } else if (user && user.role == 'seller') { %>
-                         <!-- <a href="#" class="btn btn-sm btn-success">Add to Cart</a> -->
-                          <!-- <form method="post" action="/cart">
-                            <input type="text" name="productId" value="<%= product._id %>">
-                            <button>Add to Cart</button>
-                          </form> -->
-                        <form class="d-inline" action="/products/<%= product._id %>?_method=DELETE" method="post">
-                            <button class="btn btn-sm btn-danger">Delete</button>
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-lg-6 d-flex justify-content-center">
+            <div class="card shadow-lg" style="width: 100%; max-width: 30rem;">
+                <img src="<%= product.image %>" class="card-img-top p-3 rounded" alt="Product Image" style="object-fit: cover; height: 300px;">
+                <div class="card-body text-center">
+                    <h3 class="card-title text-primary"><%= product.title %></h3>
+                    <h4 class="text-success">$ <%= product.price %></h4>
+                    <p class="card-text text-muted"><%= product.description %></p>
+                    <div class="d-flex justify-content-center gap-2">
+                        <a id="buy-now-btn" productId="<%= product._id %>" class="btn btn-primary">
+                            <i class="fas fa-shopping-cart"></i> Buy Now
+                        </a>
+                        <form class="d-inline" action="/cartItems/<%= product._id %>/add" method="post">
+                            <button class="btn btn-success"><i class="fas fa-cart-plus"></i> Add to Cart</button>
                         </form>
-                        <a href="/products/<%= product._id %>/edit" class="btn btn-sm btn-secondary">Edit</a>
-                  <% } %>
+                    </div>
+                    <% if (user && user.role == 'seller') { %>
+                        <div class="mt-3">
+                            <form class="d-inline" action="/products/<%= product._id %>?_method=DELETE" method="post">
+                                <button class="btn btn-danger">Delete</button>
+                            </form>
+                            <a href="/products/<%= product._id %>/edit" class="btn btn-secondary">Edit</a>
+                        </div>
+                    <% } %>
                 </div>
             </div>
         </div>
-        <div class="col col-lg-6">
-            <h2 class="display-5">Reviews</h2>
-            <form class="w-50" action="/products/<%= product._id %>/reviews" method="POST">
+
+        <div class="col-lg-6">
+            <h2 class="display-6">Reviews</h2>
+            <form class="w-75 mb-4" action="/products/<%= product._id %>/reviews" method="POST">
                 <fieldset class="starability-basic">
                     <input type="radio" id="no-rate" class="input-no-rate" name="rating" value="0" checked aria-label="No rating." />
                     <input type="radio" id="first-rate1" name="rating" value="1" />
@@ -51,26 +47,26 @@
                     <input type="radio" id="first-rate5" name="rating" value="5" />
                     <label for="first-rate5" title="Amazing">5 stars</label>
                 </fieldset>
-                <textarea class="form-control" name="comment"></textarea>
-                <button class="btn btn-sm btn-success mt-3">Add Comment</button>
+                <textarea class="form-control" name="comment" placeholder="Write a review..." required></textarea>
+                <button class="btn btn-success mt-3 w-100">Submit Review</button>
             </form>
 
-
-            <div class="w-50">
-                <% for( let review of product.reviews ) { %>
-                    <div class="card mt-2">
-                        <div class="card-header">
-                            <p class="starability-result" data-rating="<%= review.rating %>"></p>
+            <div class="w-75">
+                <% for(let review of product.reviews) { %>
+                    <div class="card my-3">
+                        <div class="card-header d-flex align-items-center">
+                            <img src="https://via.placeholder.com/40" class="rounded-circle me-2" alt="User">
+                            <p class="starability-result mb-0" data-rating="<%= review.rating %>"></p>
                         </div>
                         <div class="card-body">
-                          <!-- <h5 class="card-title">Special title treatment</h5> -->
-                          <p class="card-text"><%= review.comment %></p>
-                          <a href="#" class="btn btn-sm btn-danger">Delete</a>
+                            <p class="card-text"><%= review.comment %></p>
+                            <a href="#" class="btn btn-sm btn-danger">Delete</a>
                         </div>
-                      </div>
+                    </div>
                 <% } %>
             </div>
         </div>
     </div>
+</div>
 
 <script src="/js/payment.js"></script>

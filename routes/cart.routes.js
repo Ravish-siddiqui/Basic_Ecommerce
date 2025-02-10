@@ -4,62 +4,84 @@ const UserModel = require("../models/User.model");
 const router = require("express").Router();
 
 router.get("/cartItems", isLoggedIn, async (req, res) => {
-  const user = await UserModel.findById(req.user._id).populate("cart.product");
+  try {
+    const user = await UserModel.findById(req.user._id).populate(
+      "cart.product"
+    );
 
-  // let totalPrice = 0;
-  // for(let item of user.cart){
-  //   totalPrice += item.product.price * item.quantity;
-  // }
+    if (!user || !user.cart) {
+      return res.status(404).json({ error: "Cart not found" });
+    }
 
-  const totalPrice = user.cart.reduce((acc, item) => {
-    return acc + (item.product.price * item.quantity);
-  }, 0)
+    // Remove null products (to prevent errors in total price calculation)
+    user.cart = user.cart.filter((item) => item.product !== null);
+    await user.save();
 
-  res.render("cart/index", { productsInCart: user.cart, totalPrice  });
+    const totalPrice = user.cart.reduce((acc, item) => {
+      return acc + item.product.price * item.quantity;
+    }, 0);
+
+    res.render("cart/index", { productsInCart: user.cart, totalPrice });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
 });
 
 router.post("/cartItems/:id/add", isLoggedIn, async (req, res) => {
-  const { id } = req.params;
-  const userId = req.user._id;
+  try {
+    const { id } = req.params;
+    const userId = req.user._id;
 
-  const user = await UserModel.findById(userId);
-  const productIndex = user.cart.findIndex((item) => item.product == id);
+    const user = await UserModel.findById(userId);
+    const productIndex = user.cart.findIndex((item) => item.product == id);
 
-  if (productIndex == -1) {
-    user.cart.push({ product: id, quantity: 1 });
-  } else {
-    user.cart[productIndex].quantity++;
-  }
-
-  await user.save();
-
-  req.flash("success", "Product added to cart!");
-  res.redirect("back");
-});
-
-router.post("/cartItems/:id/remove", isLoggedIn, async (req, res) => {
-  const { id } = req.params;
-  const userId = req.user._id;
-
-  const user = await UserModel.findOne({ _id: userId });
-
-  const existingProductIndex = user.cart.findIndex(
-    (item) => item.product == id
-  );
-
-  if (existingProductIndex !== -1) {
-    const existingProduct = user.cart[existingProductIndex];
-
-    if (existingProduct.quantity > 1) {
-      existingProduct.quantity--;
+    if (productIndex == -1) {
+      user.cart.push({ product: id, quantity: 1 });
     } else {
-      user.cart.splice(existingProductIndex, 1);
+      user.cart[productIndex].quantity++;
     }
 
     await user.save();
-  }
 
-  res.redirect("back");
+    req.flash("success", "Product added to cart!");
+    res.redirect("back");
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
+router.post("/cartItems/:id/remove", isLoggedIn, async (req, res) => {
+  try {
+    const { id } = req.params;
+    const userId = req.user._id;
+
+    const user = await UserModel.findOne({ _id: userId });
+
+    const existingProductIndex = user.cart.findIndex(
+      (item) => item.product == id
+    );
+
+    if (existingProductIndex !== -1) {
+      const existingProduct = user.cart[existingProductIndex];
+
+      if (existingProduct.quantity > 1) {
+        existingProduct.quantity--;
+      } else {
+        user.cart.splice(existingProductIndex, 1);
+      }
+
+      await user.save();
+    }
+
+    // **Fix for Deprecated res.redirect("back")**
+    const referer = req.get("Referrer") || "/";
+    res.redirect(referer);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
 });
 
 module.exports = router;
