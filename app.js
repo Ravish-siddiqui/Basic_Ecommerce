@@ -10,7 +10,6 @@ const flash = require("connect-flash");
 const passport = require("passport");
 const Strategy = require("passport-local");
 const MongoStore = require("connect-mongo");
-const cors = require("cors");
 const UserModel = require("./models/User.model");
 
 const app = express();
@@ -25,14 +24,6 @@ mongoose
   .connect(MONGO_URL)
   .then(() => console.log("✅ DB connected!"))
   .catch((err) => console.log("❌ DB connection error:", err));
-
-// CORS Configuration for Cross-Origin Requests (Frontend on Vercel)
-app.use(
-  cors({
-    origin: "https://your-frontend.vercel.app", // Change to your frontend URL
-    credentials: true,
-  })
-);
 
 // Middleware
 app.use(express.urlencoded({ extended: true }));
