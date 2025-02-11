@@ -43,7 +43,7 @@ app.use(
     cookie: {
       secure: NODE_ENV === "production", // Secure cookies only in production (HTTPS)
       httpOnly: true,
-      sameSite: "None", // Required for cross-origin sessions
+      sameSite: "Lax", // Change from "None" to "Lax" to avoid cross-origin issues
       maxAge: 24 * 60 * 60 * 1000, // 1 day
     },
   })
