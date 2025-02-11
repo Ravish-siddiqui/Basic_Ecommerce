@@ -18,20 +18,43 @@
             text-shadow: 0 0.05rem 0.1rem rgba(0, 0, 0, 0.5);
             box-shadow: inset 0 0 5rem rgba(0, 0, 0, 0.5);
             background-color: #f8f9fa;
-            color: white; /* Make all text white */
+            color: white;
             font-family: 'Helvetica Neue', sans-serif;
+            overflow: hidden;
+            padding: 20px;
         }
 
         /* Navbar */
-        .navbar h3, .nav-link {
-            color: white !important;
-            font-size: 1rem;
-            font-weight: 600;
-            transition: color 0.3s;
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 40px;
+            /* background: rgba(0, 0, 0, 0.7); */
+            border-radius: 10px;
         }
-
-        .nav-link:hover {
-            color: #c39c63 !important; /* Change hover color */
+        .nav-links {
+            display: flex;
+            gap: 20px;
+        }
+        .nav-links a {
+            color: white !important;
+            font-weight: 600;
+            text-decoration: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            transition: background 0.3s ease;
+        }
+        .nav-links a:hover {
+            background: #c39c63;
+            color: white !important;
+        }
+        
+        /* Hide Navbar on Mobile */
+        @media (max-width: 768px) {
+            .navbar {
+                display: none;
+            }
         }
 
         /* Hero Section */
@@ -45,23 +68,11 @@
             padding: 20px;
         }
 
-        .hero h1 {
-            font-size: 3rem;
-        }
-
-        .hero p {
-            font-size: 1.2rem;
-        }
-
         .hero h1, .hero p {
             color: white;
+            margin-bottom: 15px;
         }
 
-        .hero h1:hover, .hero p:hover {
-            color: #c39c63; /* Highlight color */
-        }
-
-        /* Buttons */
         .btn-primary {
             background: white;
             border: none;
@@ -69,8 +80,8 @@
             font-size: 1rem;
             color: black;
             transition: all 0.3s;
+            border-radius: 8px;
         }
-
         .btn-primary:hover {
             background: #c39c63;
             color: white;
@@ -82,54 +93,28 @@
             padding: 20px;
             font-size: 0.9rem;
             color: white;
+            margin-top: 20px;
         }
-
         footer p:hover {
             color: #c39c63;
-        }
-
-        /* Mobile Responsiveness */
-        @media (max-width: 768px) {
-            .hero h1 {
-                font-size: 2rem;
-            }
-
-            .hero p {
-                font-size: 1rem;
-            }
-
-            .btn-primary {
-                padding: 10px 20px;
-                font-size: 0.9rem;
-            }
         }
     </style>
 </head>
 <body>
-
-    <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-light bg-transparent py-3">
-        <div class="container">
-            <a class="navbar-brand text-white" href="#">Shopping Cart</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
-                <ul class="navbar-nav">
-                    <li class="nav-item"><a class="nav-link" href="#">Home</a></li>
-                    <li class="nav-item"><a class="nav-link" href="/products">Shop</a></li>
-                    <% if(!user) { %>
-                    <li class="nav-item"><a class="nav-link" href="/login">Login</a></li>
-                    <li class="nav-item"><a class="nav-link" href="/signup">Register</a></li>
-                    <% } else { %>
-                    <li class="nav-item"><a class="nav-link" href="/logout">Logout</a></li>
-                    <% } %>
-                </ul>
-            </div>
+    <nav class="navbar">
+        <h3>Shopping Cart</h3>
+        <div class="nav-links">
+            <a href="#">Home</a>
+            <a href="/products">Shop</a>
+            <% if(!user) { %>
+            <a href="/login">Login</a>
+            <a href="/signup">Register</a>
+            <% } else { %>
+            <a href="/logout">Logout</a>
+            <% } %>
         </div>
     </nav>
-
-    <!-- Hero Section -->
+    
     <div class="container">
         <div class="hero">
             <h1>Shopping Cart</h1>
@@ -137,13 +122,9 @@
             <a href="/products" class="btn btn-primary">View Products</a>
         </div>
     </div>
-
-    <!-- Footer -->
+    
     <footer>
         <p>All Rights Reserved &copy; 2024</p>
     </footer>
-
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

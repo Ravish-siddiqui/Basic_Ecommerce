@@ -43,7 +43,7 @@ app.use(
     cookie: {
       secure: NODE_ENV === "production", // Secure cookies only in production (HTTPS)
       httpOnly: true,
-      sameSite: "Lax", // Change from "None" to "Lax" to avoid cross-origin issues
+      sameSite: "Lax",
       maxAge: 24 * 60 * 60 * 1000, // 1 day
     },
   })
@@ -57,6 +57,22 @@ app.use(passport.session());
 passport.use(new Strategy(UserModel.authenticate()));
 passport.serializeUser(UserModel.serializeUser());
 passport.deserializeUser(UserModel.deserializeUser());
+
+// Wishlist Counter Middleware ✅
+app.use(async (req, res, next) => {
+  if (req.user) {
+    try {
+      const user = await UserModel.findById(req.user._id).populate("wishList"); // Fetch user wishlist
+      res.locals.wishlistQuantity = user.wishList.length || 0;
+    } catch (err) {
+      console.error("Error fetching wishlist count:", err);
+      res.locals.wishlistQuantity = 0; // Set to 0 in case of error
+    }
+  } else {
+    res.locals.wishlistQuantity = 0;
+  }
+  next();
+});
 
 // Debugging Sessions
 app.use((req, res, next) => {
@@ -97,6 +113,7 @@ const authRoutes = require("./routes/auth.routes");
 const cartRoutes = require("./routes/cart.routes");
 const wishListAPI = require("./routes/api/wishlist.routes");
 const paymentAPI = require("./routes/api/payment.routes");
+const wishlistRoutes = require("./routes/wishlist.routes"); // Import wishlist routes
 
 // Use Routes
 app.use(productRoutes);
@@ -105,6 +122,7 @@ app.use(authRoutes);
 app.use(cartRoutes);
 app.use(wishListAPI);
 app.use(paymentAPI);
+app.use("/wishlist", wishlistRoutes); // Use the wishlist route
 
 // Catch-all Route for 404 Errors
 app.get("*", (req, res) => {
