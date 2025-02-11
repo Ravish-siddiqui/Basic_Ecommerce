@@ -22,14 +22,14 @@ const NODE_ENV = process.env.NODE_ENV || "development";
 
 // Database Connection
 mongoose
-  .connect(MONGO_URL, { useNewUrlParser: true, useUnifiedTopology: true })
+  .connect(MONGO_URL)
   .then(() => console.log("✅ DB connected!"))
   .catch((err) => console.log("❌ DB connection error:", err));
 
 // CORS Configuration for Cross-Origin Requests (Frontend on Vercel)
 app.use(
   cors({
-    origin: "https://shoppingcart-gamma-murex.vercel.app/", // Change to your frontend URL
+    origin: "https://your-frontend.vercel.app", // Change to your frontend URL
     credentials: true,
   })
 );
@@ -104,7 +104,6 @@ const productRoutes = require("./routes/product.routes");
 const reviewRoutes = require("./routes/review.routes");
 const authRoutes = require("./routes/auth.routes");
 const cartRoutes = require("./routes/cart.routes");
-
 const wishListAPI = require("./routes/api/wishlist.routes");
 const paymentAPI = require("./routes/api/payment.routes");
 
